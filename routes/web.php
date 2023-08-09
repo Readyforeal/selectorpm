@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\SelectionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
+    //Projects
     Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
     Route::get('/project/create', [ProjectController::class, 'create'])->name('project.create');
     Route::post('/project/create', [ProjectController::class, 'store']);
@@ -35,6 +37,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/project/{uid}/edit', [ProjectController::class, 'edit'])->name('project.edit');
     Route::patch('/project/{uid}/edit', [ProjectController::class, 'update']);
     Route::delete('/project/{uid}/delete', [ProjectController::class, 'destroy']);
+
+    //Selections
+    Route::get('/project/{uid}/selections', [SelectionController::class, 'index'])->name('selections.index');
+    Route::get('/project/{uid}/selection/create', [SelectionController::class, 'create'])->name('selection.create');
 });
 
 

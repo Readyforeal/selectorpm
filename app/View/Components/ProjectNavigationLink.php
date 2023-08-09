@@ -5,16 +5,18 @@ namespace App\View\Components;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-use App\Models\Project;
 
-class ProjectHeader extends Component
+class ProjectNavigationLink extends Component
 {
-    public $project;
+    public $path;
+    public $name;
     /**
      * Create a new component instance.
      */
-    public function __construct($project){
-        $this->project = $project;
+    public function __construct($path, $name)
+    {
+        $this->path = $path;
+        $this->name = $name;
     }
 
     /**
@@ -22,6 +24,6 @@ class ProjectHeader extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.project-header');
+        return view('components.project-navigation-link');
     }
 }

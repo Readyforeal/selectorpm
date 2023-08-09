@@ -1,9 +1,9 @@
-<div class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 text-gray-800 dark:text-gray-200 leading-tight p-6">
-    <a href="/project/{{ $projectUid }}" class="font-semibold text-xl">
-        {{ $projectName }}
+<div
+    class="bg-white fixed top-[65px] w-full dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 text-gray-800 dark:text-gray-200 leading-tight p-3">
+    <a href="/project/{{ $project->uid }}" class="font-semibold text-lg">
+        {{ $project->name }}
     </a>
-    <p>
-        {{ $projectAddress }}
+    <p class="text-xs text-gray-400">
+        {{ $project->address }}
     </p>
-    <a class="text-xs" href="/project/{{ $projectUid }}/edit">Edit</a>
 </div>

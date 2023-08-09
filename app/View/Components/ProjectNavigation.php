@@ -7,7 +7,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use App\Models\Project;
 
-class ProjectHeader extends Component
+class ProjectNavigation extends Component
 {
     public $project;
     /**
@@ -22,6 +22,6 @@ class ProjectHeader extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.project-header');
+        return view('components.project-navigation');
     }
 }

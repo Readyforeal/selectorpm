@@ -1,0 +1,1 @@
+<a href="{{ $path }}" class="block p-3 font-semibold hover:bg-gray-100 transition">{{ $name }}</a>
