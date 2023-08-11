@@ -1,34 +1,38 @@
 <x-app-layout>
 
-    
-    <div>
-        <x-project-header :project="$project" />
+    <x-project-header :project="$project" />
+
+    <div class="flex">
         <x-project-navigation :project="$project" />
 
-        <div class="ml-[300px] mt-[134px]">
-            <x-page-header pageRoot="Selections" pageName="Create Selection"
+        <div class="ml-[300px] mt-[134px] w-full">
+            <x-page-header pageRoot="Selections" pageName="Edit Selection"
                 path="/project/{{ $project->uid }}/selections" />
 
-            <div class="bg-slate-50 dark:bg-black p-3">
-                <div class="mx-auto w-1/3">
+            <div class="bg-white dark:bg-gray-800 p-3">
+                <div class="w-1/2">
                     <form action="/project/{{ $project->uid }}/selection/create" method="POST">
+                        @method('patch')
                         @csrf
 
                         <div class="mt-3 flex justify-end">
-                            <x-primary-button>Create Selection</x-primary-button>
+                            <x-primary-button>Save Selection</x-primary-button>
                         </div>
 
                         <div class="mt-3">
                             <x-input-label for="title">Title <span class="text-xs text-red-500">-
                                     Required</span></x-input-label>
 
-                            <x-text-input id="title" class="w-full" name="title" required />
+                            <x-text-input id="title" class="w-full" name="title" value="{{ $selection->title }}"
+                                required />
                             <x-input-error :messages="$errors->get('title')" class="mt-2" />
                         </div>
 
                         <div class="mt-3">
                             <x-input-label for="needed">Selection Needed</x-input-label>
-                            <x-check-input name="needed" />
+
+                            <input type="checkbox" class="text-indigo-800 border-gray-300 dark:border-gray-700 rounded"
+                                name="needed" {{ $selection->needed === true ? 'checked' : '' }} />
                             <x-input-error :messages="$errors->get('needed')" class="mt-2" />
                         </div>
 
@@ -39,9 +43,14 @@
                                 <x-input-label for="category">Category</x-input-label>
 
                                 <x-select-input id="category" class="w-full" name="category">
-                                    <option value="" selected>None</option>
+                                    @if ($selection->categories()->first())
+                                        <option value="{{ $selection->categories()->first() }}">{{ $selection->categories()->first()->name }}</option>
+                                    @endif
                                     @foreach ($project->categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @if ($selection->categories()->first()->id === $category->id)
+                                            @continue
+                                        @endif
+                                        <option {{ $selection->categories }} value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
                                 </x-select-input>
                                 <x-input-error :messages="$errors->get('category')" class="mt-2" />
@@ -51,9 +60,9 @@
                                 <x-input-label for="location">Location(s)</x-input-label>
 
                                 <x-select-input id="locations" class="w-full" name="locations[]" multiple>
-                                    <option value="" selected>None</option>
                                     @foreach ($project->locations as $location)
-                                        <option value="{{ $location->id }}">{{ $location->name }}</option>
+                                        {{ $location->selections()->first()->id === $selection->id ? 'selected' : '' }}
+                                        {{-- <option {{ $location->selections()->first()->id ? 'selected' : '' }} value="{{ $location->id }}">{{ $location->name }}</option> --}}
                                     @endforeach
                                 </x-select-input>
                                 <x-input-error :messages="$errors->get('locations')" class="mt-2" />

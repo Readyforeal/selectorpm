@@ -1,1 +1,1 @@
-<a href="{{ $path }}" class="block p-3 font-semibold hover:bg-gray-100 transition">{{ $name }}</a>
+<a href="{{ $path }}" class="{{ request()->routeIs($route) === true ? 'font-semibold bg-slate-200' : '' }} block mx-3 p-2 hover:pl-3 rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-900 hover:text-black hover:font-semibold dark:hover:text-white transition transition-spacing">{{ $slot }}</a>

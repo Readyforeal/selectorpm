@@ -15,6 +15,10 @@ class Project extends Model
         return $this->belongsToMany(User::class);
     }
 
+    public function categories() {
+        return $this->hasMany(Category::class);
+    }
+
     public function locations() {
         return $this->hasMany(Location::class);
     }

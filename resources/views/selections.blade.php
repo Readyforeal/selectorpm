@@ -1,13 +1,21 @@
 <x-app-layout>
-    
-    <x-project-header :project="$project"/>
-    <x-project-navigation :project="$project"/>
 
-    <div class="absolute left-[330px] right-0 mr-4">
-        <h2 class="text-3xl mb-3">Selections</h2>
+    <x-project-header :project="$project" />
 
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-3">
-            <a href="/project/{{ $project->uid }}/selection/create">Create Selection +</a>
+    <div class="flex">
+        <x-project-navigation :project="$project" />
+
+        <div class="ml-[300px] mt-[134px] w-full">
+            <x-page-header pageRoot="Selections" pageName="" path="" />
+
+            <div>
+                @foreach ($project->selections as $selection)
+                    <a class="block p-4 border-b dark:border-zinc-900 hover:bg-slate-100 dark:hover:bg-zinc-900 transition" href="/project/{{ $project->uid }}/selection/{{ $selection->id }}">
+                        <p class="font-semibold">{{ $selection->title }}</p>
+                        <p class="text-sm">{{ $selection->name == '' ? 'Selection Needed' : $selection->name }}</p>
+                    </a>
+                @endforeach
+            </div>
         </div>
     </div>
 </x-app-layout>

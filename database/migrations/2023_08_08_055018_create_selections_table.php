@@ -14,17 +14,17 @@ return new class extends Migration
         Schema::create('selections', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('project_id');
-            $table->string('title');
-            $table->boolean('needed');
-            $table->string('name');
-            $table->string('item_number');
-            $table->string('supplier');
-            $table->string('link');
-            $table->string('image');
-            $table->integer('quantity');
-            $table->string('dimensions');
-            $table->string('finish');
-            $table->string('color');
+            $table->string('title')->nullable();
+            $table->boolean('needed')->nullable();
+            $table->string('name')->nullable();
+            $table->string('item_number')->nullable();
+            $table->string('supplier')->nullable();
+            $table->string('link')->nullable();
+            $table->string('image')->nullable();
+            $table->integer('quantity')->nullable();
+            $table->string('dimensions')->nullable();
+            $table->string('finish')->nullable();
+            $table->string('color')->nullable();
             $table->index('project_id');
             $table->timestamps();
         });

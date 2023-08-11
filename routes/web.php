@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
     //Selections
     Route::get('/project/{uid}/selections', [SelectionController::class, 'index'])->name('selections.index');
     Route::get('/project/{uid}/selection/create', [SelectionController::class, 'create'])->name('selection.create');
+    Route::get('/project/{uid}/selection/{selectionId}', [SelectionController::class, 'view'])->name('selection.view');
 });
 
 

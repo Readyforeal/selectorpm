@@ -13,4 +13,8 @@ class Location extends Model
     public function project() {
         return $this->belongsTo(Project::class);
     }
+
+    public function selections() {
+        return $this->hasMany(Selection::class);
+    }
 }
