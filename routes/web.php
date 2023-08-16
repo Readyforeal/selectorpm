@@ -41,7 +41,11 @@ Route::middleware('auth')->group(function () {
     //Selections
     Route::get('/project/{uid}/selections', [SelectionController::class, 'index'])->name('selections.index');
     Route::get('/project/{uid}/selection/create', [SelectionController::class, 'create'])->name('selection.create');
+    Route::post('/project/{uid}/selection/create', [SelectionController::class, 'store']);
     Route::get('/project/{uid}/selection/{selectionId}', [SelectionController::class, 'view'])->name('selection.view');
+    Route::get('/project/{uid}/selection/{selectionId}/edit', [SelectionController::class, 'edit'])->name('selection.edit');
+    Route::patch('/project/{uid}/selection/{selectionId}/edit', [SelectionController::class, 'update']);
+    Route::delete('/project/{uid}/selection/{selectionId}/delete', [SelectionController::class, 'destroy']);
 });
 
 

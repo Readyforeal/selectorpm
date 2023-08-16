@@ -10,37 +10,48 @@ use App\Models\Selection;
 
 class SelectionController extends Controller
 {
+    private $project;
+    private $selection;
+
+    public function __construct(Request $request) {
+        $this->project = Project::where('uid', $request->uid)->first();
+        if($request->selectionId) {
+            $this->selection = Selection::find($request->selectionId);
+        }
+    }
 
     public function index(Request $request)
     {
-        $project = Project::where('uid', $request->uid)->first();
-        return view('selections', compact('project'));
+        return view('selections', [
+            'project' => $this->project
+        ]);
     }
 
     public function create(Request $request)
     {
-        $project = Project::where('uid', $request->uid)->first();
-        return view('selection.createSelection', compact('project'));
+        return view('selection.createSelection', [
+            'project' => $this->project
+        ]);
     }
 
     public function edit(Request $request)
     {
-        $project = Project::where('uid', $request->uid)->first();
-        $selection = Selection::find($request->selectionId);
-        return view('selection.editSelection', compact('project', 'selection'));
+        return view('selection.editSelection', [
+            'project' => $this->project,
+            'selection' => $this->selection,
+        ]);
     }
 
     public function view(Request $request)
     {
-        $project = Project::where('uid', $request->uid)->first();
-        $selection = Selection::find($request->selectionId);
-        return view('selection.viewSelection', compact('project', 'selection'));
+        return view('selection.viewSelection', [
+            'project' => $this->project,
+            'selection' => $this->selection,
+        ]);
     }
 
     public function store(Request $request)
     {
-        $project = Project::where('uid', $request->uid)->first();
-
         $data = $request->validate([
             'title' => 'required',
             'needed' => '',
@@ -57,9 +68,9 @@ class SelectionController extends Controller
             'locations' => '',
         ]);
 
-        $selection = $project->selections()->create([
+        $selection = $this->project->selections()->create([
             'title' => $data['title'],
-            'needed' => $data['needed'] = 'on' ? false : true,
+            'needed' => isset($data['needed']),
             'name' => $data['name'],
             'item_number' => $data['item_number'],
             'supplier' => $data['supplier'],
@@ -81,6 +92,60 @@ class SelectionController extends Controller
             }
         }
 
-        return redirect()->route('selections.index', $project->uid);
+        return redirect()->route('selections.index', $this->project->uid);
+    }
+
+    public function update(Request $request) {
+        $data = $request->validate([
+            'title' => 'required',
+            'needed' => '',
+            'name' => '',
+            'item_number' => '',
+            'supplier' => '',
+            'link' => '',
+            'image' => '',
+            'quantity' => '',
+            'dimensions' => '',
+            'finish' => '',
+            'color' => '',
+            'categories' => 'nullable|array|min:1',
+            'locations' => 'nullable|array|min:1',
+        ]);
+        
+        $this->selection->update([
+            'title' => $data['title'],
+            'needed' => isset($data['needed']),
+            'name' => $data['name'],
+            'item_number' => $data['item_number'],
+            'supplier' => $data['supplier'],
+            'link' => $data['link'],
+            'image' => $data['image'],
+            'quantity' => $data['quantity'],
+            'dimensions' => $data['dimensions'],
+            'finish' => $data['finish'],
+            'color' => $data['color'],
+        ]);
+
+        if (isset($data['categories'])) {
+            $this->selection->categories()->sync($data['categories']);
+        } else {
+            $this->selection->categories()->sync([]);
+        }
+
+        if (isset($data['locations'])) {
+            $this->selection->locations()->sync($data['locations']);
+        } else {
+            $this->selection->locations()->sync([]);
+        }
+
+        return view('selection.viewSelection', [
+            'project' => $this->project,
+            'selection' => $this->selection,
+        ]);
+    }
+
+    public function destroy(Request $request) {
+        $this->selection->delete();
+        return redirect()->route('selections.index', $this->project->uid);
     }
 }

@@ -1,4 +1,4 @@
-<div class="p-3 border-b dark:border-zinc-900">
-    <a href="{{ $path }}" class="text-sm pb-0 text-gray-400">{{ $pageRoot }}</a>
-    <h1 class="text-lg font-semibold">{{ $pageName }}</h1>
+<div class="border-b dark:border-zinc-900 p-3 leading-tight">
+    <a href="{{ $path }}" class="text-xs text-gray-400">{{ $pageRoot }}</a>
+    <p class="font-semibold text-lg">{{ $pageName }}</p>
 </div>

@@ -10,7 +10,7 @@
                 path="/project/{{ $project->uid }}/selections" />
 
             <div class="bg-slate-50 dark:bg-black p-3">
-                <div class="mx-auto w-1/3">
+                <div class="mx-auto w-1/2">
                     <form action="/project/{{ $project->uid }}/selection/create" method="POST">
                         @csrf
 

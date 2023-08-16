@@ -25,7 +25,7 @@ class ProjectController extends Controller
         $uid = uniqid();
 
         $project = Project::create([
-            'name' => $data['name'],
+        'name' => $data['name'],
             'address' => $request['address'],
             'uid' => $uid,
         ]);

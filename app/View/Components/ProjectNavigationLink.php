@@ -9,14 +9,12 @@ use Illuminate\View\Component;
 class ProjectNavigationLink extends Component
 {
     public $path;
-    public $route;
     /**
      * Create a new component instance.
      */
-    public function __construct($path, $route)
+    public function __construct($path)
     {
         $this->path = $path;
-        $this->route = $route;
     }
 
     /**
